@@ -16,6 +16,7 @@ ecommerce-app/
 ## Tech Stack
 
 ### Backend
+- **Node.js** - JavaScript runtime environment
 - **NestJS** - Progressive Node.js framework
 - **TypeScript** - Type-safe JavaScript
 - **SQLite** - Lightweight database (TypeORM)
