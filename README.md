@@ -30,6 +30,7 @@ ecommerce-app/
 - **React Router** - Client-side routing
 - **Axios** - HTTP client
 - **React Toastify** - Toast notifications
+- **CSS3** - Modern styling with gradients, animations, and responsive design
 
 ## Features
 
@@ -39,19 +40,44 @@ ecommerce-app/
 - ✅ Password reset via email
 - ✅ User profile management
 - ✅ Product browsing and search
+  - Category filtering
+  - Stock availability indicators
+  - Product details modal
 - ✅ Shopping cart with quantity management
+  - Real-time stock validation
+  - Quantity adjustment
+  - Cart persistence
 - ✅ Order placement and tracking
+  - Order status sections: Pending, Ready for Pickup, Completed
+  - Pagination support (5 orders per page per section)
+  - Order details modal view
+  - Order history tracking
 - ✅ Payment processing (PayMongo)
   - Credit/Debit Cards
   - GCash
   - GrabPay
+  - Webhook support for automatic order creation
+  - Duplicate order prevention
 - ✅ Contact form for customer support
 
 ### Admin Features
-- ✅ Admin dashboard
+- ✅ Admin dashboard with real-time statistics
+  - Total revenue tracking (from completed orders)
+  - Order count by status (Pending, Ready for Pickup, Completed, Total Orders)
 - ✅ Product management (CRUD)
+  - Add, edit, delete products
+  - Image upload support
+  - Stock and price management
+  - Category filtering
 - ✅ Order management
-- ✅ User management
+  - Kanban-style layout for order status tracking
+  - Separate views for active orders (Pending, Ready for Pickup) and Order History (Completed)
+  - Pagination support (5 orders per page)
+  - Status updates: Pending → Ready for Pickup → Completed
+  - Order details modal with customer information
+- ✅ Customer suggestions/contact management
+  - View and manage customer messages
+  - Mark messages as read/unread
 - ✅ Stock and price validation
 
 ## Getting Started
@@ -194,6 +220,12 @@ This application uses PayMongo for payment processing. See [PAYMONGO_SETUP.md](.
 - GCash
 - GrabPay
 
+### Payment Flow
+- Client-side payment intent creation
+- Webhook support for automatic order confirmation
+- Duplicate order prevention (both client and server-side)
+- Fallback order creation if webhooks are not configured
+
 ## Environment Variables
 
 ### Backend (.env)
@@ -223,6 +255,31 @@ This application uses PayMongo for payment processing. See [PAYMONGO_SETUP.md](.
 - `npm run build` - Build for production
 - `npm test` - Run tests
 
+## Recent Updates
+
+### Version 2.0 (Latest)
+
+#### Admin Panel Enhancements
+- ✨ Refactored admin pages into separate components for better maintainability
+- ✨ Added comprehensive admin dashboard with revenue and order statistics
+- ✨ Implemented Kanban-style order management layout
+- ✨ Separated Order History from active orders management
+- ✨ Added pagination to all admin order pages (5 items per page)
+- ✨ Enhanced UI/UX with modern gradients, shadows, and animations
+- ✨ Updated currency display to use Philippine Peso (₱) throughout
+
+#### User Experience Improvements
+- ✨ Added pagination to user orders page (5 items per section)
+- ✨ Improved order status tracking with separate sections
+- ✨ Added order details modal for better order information display
+- ✨ Enhanced order cards with better visual hierarchy
+
+#### Bug Fixes & Performance
+- 🐛 Fixed duplicate order creation issue during checkout
+- 🐛 Implemented robust duplicate prevention on both client and server
+- 🐛 Removed auto-refresh from orders page for better user control
+- 🐛 Fixed pagination reset logic when orders change status
+
 ## Security Notes
 
 - Never commit `.env` files to version control
@@ -230,6 +287,7 @@ This application uses PayMongo for payment processing. See [PAYMONGO_SETUP.md](.
 - Enable HTTPS in production
 - Keep dependencies updated
 - Use environment-specific API keys (test vs. production)
+- Duplicate order prevention mechanisms in place
 
 ## Contributing
 
