@@ -1,4 +1,4 @@
-# Mini Donut E-Commerce Website
+# Activity 9: Mini E-Commerce API + UI
 
 A full-stack e-commerce application with NestJS backend and React frontend, featuring user authentication, payment processing, and admin management.
 
