@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, UseGuards, Req, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, UseGuards, Req, Patch, Delete } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 import { Request } from 'express';
 import { OrdersService } from './orders.service';
@@ -66,5 +66,18 @@ export class OrdersController {
   @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
   updateStatus(@Param('id') id: string, @Body() updateOrderStatusDto: UpdateOrderStatusDto) {
     return this.ordersService.updateStatus(+id, updateOrderStatusDto.status);
+  }
+
+  @Delete('admin/:id')
+  @UseGuards(AdminGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete order (Admin)', description: 'Delete a pending or ready_for_pickup order (Admin only). Stock will be restored.' })
+  @ApiParam({ name: 'id', description: 'Order ID', type: 'number' })
+  @ApiResponse({ status: 204, description: 'Order deleted successfully' })
+  @ApiResponse({ status: 400, description: 'Bad request - order not found or cannot be deleted' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
+  async remove(@Param('id') id: string) {
+    await this.ordersService.remove(+id);
   }
 }

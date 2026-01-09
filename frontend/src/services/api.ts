@@ -96,6 +96,7 @@ export const ordersAPI = {
   create: (data: any) => api.post('/orders', data),
   getAllAdmin: () => api.get('/orders/admin/all'),
   updateStatus: (id: number, status: string) => api.patch(`/orders/admin/${id}/status`, { status }),
+  delete: (id: number) => api.delete(`/orders/admin/${id}`),
 };
 
 export const paymentAPI = {

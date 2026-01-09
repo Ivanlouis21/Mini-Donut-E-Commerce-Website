@@ -113,6 +113,7 @@ const App: React.FC = () => {
   const handleLogout = (): void => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('userAvatar');
     setUser(null);
     window.dispatchEvent(new Event('userUpdated'));
     window.location.href = '/login';
@@ -265,6 +266,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const handleLogout = (): void => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('userAvatar');
     window.dispatchEvent(new Event('userUpdated'));
     window.location.href = '/login';
   };
@@ -321,9 +323,9 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => setShowProfileMenu((prev) => !prev)}
               >
                 {(() => {
-                  const storedAvatar = localStorage.getItem('userAvatar');
-                  return storedAvatar ? (
-                    <img src={storedAvatar} alt="Profile" className="profile-nav-avatar" />
+                  const avatar = user?.profilePicture || localStorage.getItem('userAvatar');
+                  return avatar ? (
+                    <img src={avatar} alt="Profile" className="profile-nav-avatar" />
                   ) : (
                     <span className="profile-nav-icon">👤</span>
                   );
@@ -334,9 +336,9 @@ const Navbar: React.FC<NavbarProps> = ({
                   <div className="profile-dropdown-header">
                     <div className="profile-dropdown-avatar">
                       {(() => {
-                        const storedAvatar = localStorage.getItem('userAvatar');
-                        return storedAvatar ? (
-                          <img src={storedAvatar} alt="Profile" />
+                        const avatar = user?.profilePicture || localStorage.getItem('userAvatar');
+                        return avatar ? (
+                          <img src={avatar} alt="Profile" />
                         ) : (
                           <span>{user.firstName?.[0]?.toUpperCase() || 'U'}</span>
                         );
@@ -435,14 +437,17 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClose, onUserUpdate
   const [isError, setIsError] = useState(false);
   const [activeTab, setActiveTab] = useState<'profile' | 'password'>('profile');
   
-  // Photo upload state - prioritize user.profilePicture from backend, then localStorage
-  const [avatar, setAvatar] = useState<string | null>(user.profilePicture || localStorage.getItem('userAvatar'));
+  // Photo upload state - prioritize user.profilePicture from backend
+  const [avatar, setAvatar] = useState<string | null>(user.profilePicture || null);
   
   // Sync avatar when user.profilePicture changes
   useEffect(() => {
     if (user.profilePicture) {
       setAvatar(user.profilePicture);
       localStorage.setItem('userAvatar', user.profilePicture);
+    } else {
+      setAvatar(null);
+      localStorage.removeItem('userAvatar');
     }
   }, [user.profilePicture]);
   

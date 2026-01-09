@@ -343,6 +343,7 @@ const AdminPage: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('userAvatar');
     window.dispatchEvent(new Event('userUpdated'));
     navigate('/login');
   };

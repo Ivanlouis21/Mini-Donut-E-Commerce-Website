@@ -178,4 +178,40 @@ export class OrdersService {
       relations: ['items', 'items.product', 'user'],
     });
   }
+
+  async remove(id: number): Promise<void> {
+    const order = await this.orderRepository.findOne({
+      where: { id },
+      relations: ['items', 'items.product'],
+    });
+
+    if (!order) {
+      throw new BadRequestException(`Order with ID ${id} not found`);
+    }
+
+    // Only allow deletion of pending or ready_for_pickup orders
+    if (order.status !== 'pending' && order.status !== 'ready_for_pickup') {
+      throw new BadRequestException(`Cannot delete order with status '${order.status}'. Only pending or ready_for_pickup orders can be deleted.`);
+    }
+
+    // Restore stock for each item in the order
+    if (order.items && order.items.length > 0) {
+      for (const item of order.items) {
+        try {
+          const product = await this.productsService.findOne(item.productId);
+          product.stock += item.quantity;
+          await this.productsService.update(item.productId, { stock: product.stock });
+        } catch (error) {
+          // If product not found, continue with deletion (product may have been deleted)
+          console.warn(`Product ${item.productId} not found, skipping stock restoration`);
+        }
+      }
+    }
+
+    // Delete order items first (due to foreign key constraint)
+    await this.orderItemRepository.delete({ orderId: id });
+
+    // Delete the order
+    await this.orderRepository.delete(id);
+  }
 }

@@ -32,9 +32,11 @@ const LoginPage: React.FC = () => {
       // Store token and user data
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
-      // Store profile picture if available
+      // Store profile picture if available, otherwise clear any old avatar
       if (response.data.user.profilePicture) {
         localStorage.setItem('userAvatar', response.data.user.profilePicture);
+      } else {
+        localStorage.removeItem('userAvatar');
       }
       // Trigger user update event
       window.dispatchEvent(new Event('userUpdated'));
