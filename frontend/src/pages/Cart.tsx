@@ -97,9 +97,20 @@ const Cart: React.FC = () => {
     
     // Check for payment success callback
     if (searchParams.get('payment') === 'success') {
-      handlePaymentSuccess();
-      // Clean up URL
-      navigate('/cart', { replace: true });
+      // Prevent multiple calls by checking if we've already processed this payment
+      const paymentProcessed = sessionStorage.getItem('payment_success_processed');
+      if (!paymentProcessed) {
+        sessionStorage.setItem('payment_success_processed', 'true');
+        handlePaymentSuccess();
+        // Clean up URL after a delay to allow processing
+        setTimeout(() => {
+          navigate('/cart', { replace: true });
+          // Clear the flag after 5 seconds to allow retry if needed
+          setTimeout(() => {
+            sessionStorage.removeItem('payment_success_processed');
+          }, 5000);
+        }, 100);
+      }
     }
     
     // Listen for cart update events
@@ -182,8 +193,51 @@ const Cart: React.FC = () => {
   };
 
   const handlePaymentSuccess = async () => {
+    // Prevent duplicate order creation
+    const paymentProcessedKey = 'payment_processed_' + Date.now();
+    const lastProcessed = sessionStorage.getItem('last_payment_processed');
+    const now = Date.now();
+    
+    // If we processed a payment in the last 10 seconds, skip to prevent duplicates
+    if (lastProcessed && (now - parseInt(lastProcessed)) < 10000) {
+      toast.success('Order placed successfully!');
+      window.dispatchEvent(new Event('productUpdated'));
+      navigate('/orders');
+      return;
+    }
+    
+    // Mark that we're processing this payment
+    sessionStorage.setItem('last_payment_processed', now.toString());
+    
     try {
-      // Refresh cart first to get latest state (webhook may have already cleared it)
+      // Wait a bit to allow webhook to process first (webhooks are usually faster)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Check if order was already created by checking recent orders
+      try {
+        const ordersResponse = await ordersAPI.getAll();
+        const recentOrders = ordersResponse.data || [];
+        
+        // Check if there's a very recent order (within last 30 seconds)
+        const thirtySecondsAgo = new Date(Date.now() - 30000);
+        const hasRecentOrder = recentOrders.some((order: any) => {
+          const orderDate = new Date(order.createdAt);
+          return orderDate > thirtySecondsAgo;
+        });
+        
+        if (hasRecentOrder) {
+          // Order was likely already created by webhook
+          toast.success('Order placed successfully!');
+          window.dispatchEvent(new Event('productUpdated'));
+          navigate('/orders');
+          return;
+        }
+      } catch (ordersErr) {
+        // If we can't check orders, continue with cart check
+        console.log('Could not check recent orders:', ordersErr);
+      }
+      
+      // Refresh cart to get latest state (webhook may have already cleared it)
       const response = await cartAPI.getAll();
       const currentCartItems = response.data;
       
@@ -197,7 +251,19 @@ const Cart: React.FC = () => {
       }
 
       // Create order after successful payment (fallback if webhook didn't work)
-      const orderItems = currentCartItems.map((item: CartItem) => ({
+      // But first, check one more time if cart is still not empty after a short delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const finalCartCheck = await cartAPI.getAll();
+      
+      if (!finalCartCheck.data || finalCartCheck.data.length === 0) {
+        // Cart was cleared by webhook in the meantime
+        toast.success('Order placed successfully!');
+        window.dispatchEvent(new Event('productUpdated'));
+        navigate('/orders');
+        return;
+      }
+
+      const orderItems = finalCartCheck.data.map((item: CartItem) => ({
         productId: item.productId,
         quantity: item.quantity,
         price: parseFloat(item.product.price.toString()),
@@ -212,7 +278,7 @@ const Cart: React.FC = () => {
       // Only show error if it's not the "empty cart" error
       // If cart is empty, order was likely already created by webhook
       const errorMessage = err.response?.data?.message || 'Failed to create order';
-      if (errorMessage.includes('at least one item')) {
+      if (errorMessage.includes('at least one item') || errorMessage.includes('cart is empty')) {
         // Order was already created by webhook, just navigate
         toast.success('Order placed successfully!');
         // Dispatch event to notify OrderNow page to refresh products (stock updated)

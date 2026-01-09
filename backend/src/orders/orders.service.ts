@@ -23,6 +23,40 @@ export class OrdersService {
       throw new BadRequestException('Order must have at least one item');
     }
 
+    // Check for duplicate orders within the last 30 seconds
+    // This prevents both webhook and client-side from creating duplicate orders
+    const thirtySecondsAgo = new Date(Date.now() - 30000);
+    const recentOrders = await this.orderRepository.find({
+      where: { userId },
+      relations: ['items'],
+      order: { createdAt: 'DESC' },
+      take: 5, // Check last 5 orders
+    });
+
+    // Check if there's a very recent order with the same items
+    for (const recentOrder of recentOrders) {
+      const orderDate = new Date(recentOrder.createdAt);
+      if (orderDate > thirtySecondsAgo) {
+        // Compare items to see if they match
+        const recentItemIds = recentOrder.items
+          .map(item => `${item.productId}-${item.quantity}`)
+          .sort()
+          .join(',');
+        const newItemIds = createOrderDto.items
+          .map(item => `${item.productId}-${item.quantity}`)
+          .sort()
+          .join(',');
+
+        if (recentItemIds === newItemIds) {
+          // Duplicate order detected - return the existing order instead
+          return await this.orderRepository.findOne({
+            where: { id: recentOrder.id },
+            relations: ['items', 'items.product'],
+          });
+        }
+      }
+    }
+
     let total = 0;
     const orderItems: OrderItem[] = [];
 

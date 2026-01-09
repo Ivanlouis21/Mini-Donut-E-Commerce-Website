@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useSearchParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useSearchParams, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomePage from './pages/HomePage';
@@ -10,7 +10,11 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
-import AdminPage from './pages/AdminPage';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminOrders from './pages/AdminOrders';
+import AdminProducts from './pages/AdminProducts';
+import AdminSuggestions from './pages/AdminSuggestions';
+import AdminOrderHistory from './pages/AdminOrderHistory';
 import Footer from './components/Footer';
 import { User } from './types/auth.types';
 import { authAPI } from './services/api';
@@ -152,7 +156,7 @@ const AppContent: React.FC<AppContentProps> = ({
   handleLogout,
 }) => {
   const location = useLocation();
-  const isAdminRoute = location.pathname === '/admin';
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
     <div className="App">
@@ -176,7 +180,12 @@ const AppContent: React.FC<AppContentProps> = ({
           <Route path="/register" element={<SignupPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+          <Route path="/admin/order-history" element={<AdminOrderHistory />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/suggestions" element={<AdminSuggestions />} />
         </Routes>
       </main>
 
@@ -341,7 +350,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   <div className="profile-dropdown-divider"></div>
                   {user.role === 'admin' && (
                     <Link
-                      to="/admin"
+                      to="/admin/orders"
                       className="profile-dropdown-item"
                       onClick={() => setShowProfileMenu(false)}
                     >

@@ -14,10 +14,10 @@ export class OrderItem {
   @JoinColumn({ name: 'orderId' })
   order: Order;
 
-  @Column()
+  @Column({ nullable: true })
   productId: number;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'productId' })
   product: Product;
 
