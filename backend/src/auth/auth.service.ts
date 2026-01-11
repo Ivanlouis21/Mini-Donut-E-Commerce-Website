@@ -236,4 +236,58 @@ export class AuthService {
       user: userWithoutPassword,
     };
   }
+
+  /**
+   * Initialize admin user on application startup if no admin exists
+   * This runs automatically when the server starts
+   */
+  async initializeAdminUser() {
+    // Check if any admin user exists
+    const existingAdmin = await this.userRepository.findOne({
+      where: { role: 'admin' },
+    });
+
+    if (existingAdmin) {
+      console.log('✓ Admin user already exists');
+      return;
+    }
+
+    // Get admin credentials from environment variables or use defaults
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const adminFirstName = process.env.ADMIN_FIRST_NAME || 'Admin';
+    const adminLastName = process.env.ADMIN_LAST_NAME || 'User';
+
+    // Check if user with this email already exists
+    let user = await this.userRepository.findOne({
+      where: { email: adminEmail },
+    });
+
+    if (user) {
+      // User exists but is not admin, promote them
+      user.role = 'admin';
+      await this.userRepository.save(user);
+      console.log(`✓ Existing user promoted to admin: ${adminEmail}`);
+      console.log(`  Email: ${adminEmail}`);
+      console.log(`  Password: ${adminPassword} (use existing password to login)`);
+    } else {
+      // Create new admin user
+      const hashedPassword = await bcrypt.hash(adminPassword, 10);
+      
+      user = this.userRepository.create({
+        email: adminEmail,
+        password: hashedPassword,
+        firstName: adminFirstName,
+        lastName: adminLastName,
+        role: 'admin',
+      });
+
+      await this.userRepository.save(user);
+      console.log(`✓ Admin user created automatically on startup`);
+      console.log(`  Email: ${adminEmail}`);
+      console.log(`  Password: ${adminPassword}`);
+      console.log(`  Role: admin`);
+      console.log(`  ⚠️  IMPORTANT: Change the default password after first login!`);
+    }
+  }
 }

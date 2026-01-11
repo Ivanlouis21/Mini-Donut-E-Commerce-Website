@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as express from 'express';
+import { AuthService } from './auth/auth.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -66,6 +67,15 @@ async function bootstrap() {
       persistAuthorization: true,
     },
   });
+  
+  // Initialize admin user if none exists (runs automatically on startup)
+  try {
+    const authService = app.get(AuthService);
+    await authService.initializeAdminUser();
+  } catch (error) {
+    console.warn('⚠️  Could not initialize admin user:', error.message);
+    console.warn('   You may need to create an admin manually using: node create-admin.js');
+  }
   
   await app.listen(3001);
   console.log('Backend server running on http://localhost:3001');
