@@ -241,6 +241,9 @@ input::placeholder {
     padding: var(--spacing-md);
     margin: var(--spacing-md);
     border-radius: var(--radius-lg);
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   h1 {
@@ -249,5 +252,49 @@ input::placeholder {
 
   h2 {
     font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm);
+    border-radius: var(--radius-md);
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  button {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    font-size: 1rem;
   }
 }

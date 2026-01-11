@@ -235,67 +235,67 @@ const AdminOrders: React.FC = () => {
       onClick={() => handleOrderCardClick(order)}
       style={{ cursor: (order.status === 'pending' || order.status === 'ready_for_pickup') ? 'pointer' : 'default' }}
     >
-      <div className="order-header">
-        <div className="order-info">
-          <div className="order-id-section">
-            <h3>Order #{order.id}</h3>
-            <span className="order-items-count">{order.items?.length || 0} {order.items?.length === 1 ? 'item' : 'items'}</span>
-          </div>
-          <p className="order-date">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-              <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-            {formatDate(order.createdAt)}
-          </p>
-          {order.user && (
-            <div className="order-user">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="order-user-name">{order.user.firstName} {order.user.lastName}</span>
-              <span className="order-user-email">({order.user.email})</span>
-            </div>
-          )}
-        </div>
-        <div className="order-status">
-          <span
-            className="status-badge"
-            style={{ backgroundColor: getStatusColor(order.status) }}
-          >
-            {formatStatusName(order.status)}
-          </span>
-        </div>
-      </div>
-      <div className="order-items">
-        {order.items?.map((item) => (
-          <div key={item.id} className="order-item">
-            <div className="order-item-info">
-              <h4>{item.product?.name || 'Product'}</h4>
-              <div className="order-item-details">
-                <span className="order-item-quantity">Qty: {item.quantity}</span>
-                <span className="order-item-price">₱{parseFloat(item.price.toString()).toFixed(2)} each</span>
-              </div>
-            </div>
-            <div className="order-item-total">
-              ₱{(parseFloat(item.price.toString()) * item.quantity).toFixed(2)}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="order-footer">
-        <div className="order-total">
-          <span className="order-total-label">Total Amount</span>
-          <strong>₱{parseFloat(order.total.toString()).toFixed(2)}</strong>
-        </div>
+                <div className="order-header">
+                  <div className="order-info">
+                    <div className="order-id-section">
+                      <h3>Order #{order.id}</h3>
+                      <span className="order-items-count">{order.items?.length || 0} {order.items?.length === 1 ? 'item' : 'items'}</span>
+                    </div>
+                    <p className="order-date">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      </svg>
+                      {formatDate(order.createdAt)}
+                    </p>
+                    {order.user && (
+                      <div className="order-user">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        <span className="order-user-name">{order.user.firstName} {order.user.lastName}</span>
+                        <span className="order-user-email">({order.user.email})</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="order-status">
+                    <span
+                      className="status-badge"
+                      style={{ backgroundColor: getStatusColor(order.status) }}
+                    >
+                      {formatStatusName(order.status)}
+                    </span>
+                  </div>
+                </div>
+                <div className="order-items">
+                  {order.items?.map((item) => (
+                    <div key={item.id} className="order-item">
+                      <div className="order-item-info">
+                        <h4>{item.product?.name || 'Product'}</h4>
+                        <div className="order-item-details">
+                          <span className="order-item-quantity">Qty: {item.quantity}</span>
+                          <span className="order-item-price">₱{parseFloat(item.price.toString()).toFixed(2)} each</span>
+                        </div>
+                      </div>
+                      <div className="order-item-total">
+                        ₱{(parseFloat(item.price.toString()) * item.quantity).toFixed(2)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="order-footer">
+                  <div className="order-total">
+                    <span className="order-total-label">Total Amount</span>
+                    <strong>₱{parseFloat(order.total.toString()).toFixed(2)}</strong>
+                  </div>
         {(order.status === 'pending' || order.status === 'ready_for_pickup') && (
-          <button
+                      <button
             className="btn-delete-order"
             onClick={(e) => handleDeleteOrder(order.id, e)}
             title="Delete Order"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 6H5H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               <path d="M10 11V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -528,26 +528,26 @@ const AdminOrders: React.FC = () => {
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                        </svg>
                     Ready for Pickup
-                  </button>
-                )}
+                      </button>
+                    )}
                 {selectedOrder.status === 'ready_for_pickup' && (
-                  <button
+                      <button
                     className="btn btn-success"
                     onClick={() => handleUpdateOrderStatus(selectedOrder.id, 'completed')}
-                  >
+                      >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    Complete Order
-                  </button>
-                )}
+                          <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        Complete Order
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
           </div>
-        </div>
-      )}
+        )}
     </AdminLayout>
   );
 };

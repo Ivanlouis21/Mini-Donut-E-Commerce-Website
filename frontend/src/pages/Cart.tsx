@@ -101,10 +101,10 @@ const Cart: React.FC = () => {
       const paymentProcessed = sessionStorage.getItem('payment_success_processed');
       if (!paymentProcessed) {
         sessionStorage.setItem('payment_success_processed', 'true');
-        handlePaymentSuccess();
+      handlePaymentSuccess();
         // Clean up URL after a delay to allow processing
         setTimeout(() => {
-          navigate('/cart', { replace: true });
+      navigate('/cart', { replace: true });
           // Clear the flag after 5 seconds to allow retry if needed
           setTimeout(() => {
             sessionStorage.removeItem('payment_success_processed');

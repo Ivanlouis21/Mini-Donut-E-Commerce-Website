@@ -130,8 +130,7 @@ export class PaymentService {
               email: user.email,
             },
             // Enable automatic email receipt - PayMongo will send receipt to billing email
-            // Temporarily disabled
-            send_email_receipt: false,
+            send_email_receipt: true,
             // Success and cancel URLs
             success_url: returnUrl,
             // Extract base URL from returnUrl for cancel URL

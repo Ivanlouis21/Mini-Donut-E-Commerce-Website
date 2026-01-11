@@ -1823,54 +1823,226 @@
 
 @media (max-width: 768px) {
   .admin-container {
-    padding: 1rem;
-  }
-
-  .admin-header {
-    padding: 1rem;
-  }
-
-  .admin-logo {
-    font-size: 1.25rem;
-  }
-
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-footer-content {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .toast-admin {
-    top: 70px !important;
-  }
-
-  .orders-columns {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .orders-column-header {
     padding: 0.75rem;
   }
 
-  .orders-column-title {
+  .admin-header {
+    padding: 0.75rem;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .admin-logo {
     font-size: 1.125rem;
+  }
+
+  .admin-nav {
+    padding: var(--spacing-xs);
+    gap: var(--spacing-xs);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-nav-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+    min-width: auto;
+    white-space: nowrap;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .dashboard-header {
+    padding: var(--spacing-lg);
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-cards {
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+
+  .dashboard-card {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-md);
+  }
+
+  .dashboard-card-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
   }
 
   .dashboard-card-value {
     font-size: 1.75rem;
   }
 
+  .dashboard-card-label {
+    font-size: 0.875rem;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 0.875rem;
+    font-size: 1rem;
+    min-height: 44px;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1rem;
+    min-height: 44px;
+  }
+
+  .admin-footer-content {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+    padding: var(--spacing-md);
+  }
+
+  .toast-admin {
+    top: 70px !important;
+    left: 1rem;
+    right: 1rem;
+    width: auto;
+  }
+
+  .orders-columns {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .orders-column-header {
+    padding: var(--spacing-md);
+  }
+
+  .orders-column-title {
+    font-size: 1.125rem;
+  }
+
+  .order-card {
+    padding: var(--spacing-md);
+  }
+
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+    margin: var(--spacing-md);
+  }
+
+  .modal-header {
+    padding: var(--spacing-md);
+  }
+
+  .modal-body {
+    padding: var(--spacing-md);
+  }
+
+  .modal-footer {
+    padding: var(--spacing-md);
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-container {
+    padding: var(--spacing-sm);
+  }
+
+  .admin-header {
+    padding: var(--spacing-sm);
+  }
+
+  .admin-logo {
+    font-size: 1rem;
+  }
+
+  .admin-nav-item {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.8rem;
+    min-height: 40px;
+  }
+
+  .dashboard-header {
+    padding: var(--spacing-md);
+  }
+
   .dashboard-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .dashboard-cards {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+
+  .dashboard-card {
+    padding: var(--spacing-md);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-sm);
+  }
+
+  .dashboard-card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+
+  .dashboard-card-value {
     font-size: 1.5rem;
+  }
+
+  .dashboard-card-label {
+    font-size: 0.8rem;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .orders-column-header {
+    padding: var(--spacing-sm);
+  }
+
+  .orders-column-title {
+    font-size: 1rem;
+  }
+
+  .order-card {
+    padding: var(--spacing-sm);
   }
 }
 

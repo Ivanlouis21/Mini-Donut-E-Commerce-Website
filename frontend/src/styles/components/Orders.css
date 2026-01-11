@@ -813,5 +813,96 @@
   .orders-column-pagination .pagination-btn {
     font-size: 0.8rem;
     padding: 0.5rem 0.75rem;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orders-page-container {
+    padding: var(--spacing-sm);
+  }
+
+  .orders-content h1 {
+    font-size: 1.25rem;
+  }
+
+  .orders-nav {
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+  }
+
+  .orders-nav-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+    min-height: 44px;
+  }
+
+  .orders-columns {
+    gap: var(--spacing-md);
+  }
+
+  .orders-column-header {
+    padding: var(--spacing-sm);
+  }
+
+  .orders-column-title {
+    font-size: 0.95rem;
+  }
+
+  .order-card {
+    padding: var(--spacing-sm);
+  }
+
+  .order-header {
+    gap: var(--spacing-sm);
+  }
+
+  .order-id {
+    font-size: 0.9rem;
+  }
+
+  .order-date {
+    font-size: 0.8rem;
+  }
+
+  .order-item {
+    gap: var(--spacing-xs);
+  }
+
+  .order-item-name {
+    font-size: 0.9rem;
+  }
+
+  .order-item-quantity,
+  .order-item-price {
+    font-size: 0.85rem;
+  }
+
+  .orders-pagination {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+
+  .pagination-btn {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+
+  .pagination-info {
+    font-size: 0.875rem;
+  }
+
+  .orders-column-pagination {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+
+  .orders-column-pagination .pagination-btn {
+    min-height: 44px;
+    font-size: 0.8rem;
+  }
+
+  .pagination-info-small {
+    font-size: 0.7rem;
   }
 }

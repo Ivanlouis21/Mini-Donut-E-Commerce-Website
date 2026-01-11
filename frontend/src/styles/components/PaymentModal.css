@@ -238,15 +238,75 @@
     padding: var(--spacing-lg);
   }
 
+  .payment-modal-header h2 {
+    font-size: 1.5rem;
+  }
+
   .payment-modal-body {
     padding: var(--spacing-lg);
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .form-group input {
+    padding: var(--spacing-md);
+    font-size: 1rem;
+    min-height: 44px;
   }
 
   .payment-amount-value {
     font-size: 1.5rem;
+  }
+
+  .btn-pay {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1rem;
+    min-height: 48px;
+  }
+
+  .btn-close {
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-modal {
+    width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .payment-modal-header {
+    padding: var(--spacing-md);
+  }
+
+  .payment-modal-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .payment-modal-body {
+    padding: var(--spacing-md);
+  }
+
+  .payment-amount-value {
+    font-size: 1.25rem;
+  }
+
+  .btn-pay {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: 1rem;
+    min-height: 48px;
+  }
+
+  .btn-close {
+    width: 32px;
+    height: 32px;
+    font-size: 1.125rem;
   }
 }
