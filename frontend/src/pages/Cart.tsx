@@ -30,9 +30,24 @@ const Cart: React.FC = () => {
 
   // Product image mapping based on product name
   const getProductImage = (productName: string, imageUrl?: string): string => {
-    // If backend provides imageUrl, use it
+    // If backend provides imageUrl, handle it properly
     if (imageUrl) {
-      return imageUrl;
+      // If it's already a full URL (http/https), use it as-is
+      if (imageUrl.startsWith('http')) {
+        return imageUrl;
+      }
+      // If it's a frontend static asset path, use it as-is
+      if (imageUrl.startsWith('/Assets/')) {
+        return imageUrl;
+      }
+      // If it's a backend upload path, prefix with backend URL
+      if (imageUrl.startsWith('/uploads/')) {
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+        return `${apiUrl}${imageUrl}`;
+      }
+      // For any other relative path, assume it's a backend path
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+      return `${apiUrl}${imageUrl}`;
     }
 
     // Otherwise, map product names to image paths

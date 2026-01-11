@@ -1,6 +1,40 @@
 # Activity 9: Mini E-Commerce API + UI
 
-A full-stack e-commerce application with NestJS backend and React frontend, featuring user authentication, payment processing, and admin management.
+## Title of Activity
+**Mini E-Commerce Website - Crazy Mini Donuts Online Store**
+
+## Short Description
+
+A full-stack e-commerce application with NestJS backend and React frontend, featuring user authentication, payment processing, and admin management. This is an online store for a mini donut shop that allows customers to browse products, manage shopping carts, place orders, and make payments. It includes a comprehensive admin dashboard for managing products, orders, and customer inquiries.
+
+**Key Features:**
+- **Customer Features**: User registration/login, product browsing with category filtering, shopping cart management, order placement and tracking, payment processing (PayMongo), and contact form
+- **Admin Features**: Dashboard with revenue statistics, product management (CRUD operations), order management with status tracking (Kanban-style layout), and customer message management
+
+## Screenshots
+
+> **Note**: Please refer to `ACTIVITY_DOCUMENTATION.md` for detailed screenshot instructions and API examples.
+
+### UI Screenshots
+- Homepage/Product listing
+- Shopping cart
+- Checkout/Payment
+- Order tracking
+- Admin dashboard
+- Admin product management
+- Admin order management
+
+### API Examples
+- API root endpoint response
+- Product listing API
+- User authentication API
+- Swagger API documentation
+
+See `ACTIVITY_DOCUMENTATION.md` for complete screenshot guidelines and API examples.
+
+## Instructions on How to Run the Project
+
+For detailed setup instructions, please see `ACTIVITY_DOCUMENTATION.md` or continue reading below.
 
 ## Project Structure
 

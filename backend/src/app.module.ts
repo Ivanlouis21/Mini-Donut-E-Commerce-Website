@@ -12,8 +12,10 @@ import { Order } from './orders/entities/order.entity';
 import { OrderItem } from './orders/entities/order-item.entity';
 import { User } from './auth/entities/user.entity';
 import { ContactMessage } from './contact/entities/contact-message.entity';
+import { AppController } from './app.controller';
 
 @Module({
+  controllers: [AppController],
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
